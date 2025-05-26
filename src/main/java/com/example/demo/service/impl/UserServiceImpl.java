@@ -36,15 +36,21 @@ public class UserServiceImpl implements UserService {
 
     @PostConstruct
     public void init() {
-        if (userRepository.count() == 0) {
-            try {
-                if (userRepository.count() == 0) {
-                    loadUsers();
-                }
-            } catch (Exception e) {
-                logger.warn("Failed to load users on startup", e);
+        try {
+            if (userRepository.count() == 0) {
+                loadUsers();
             }
+            reindex();
+        } catch (Exception e) {
+            logger.warn("Failed to load users on startup", e);
         }
+    }
+
+    private void reindex() {
+        Search.mapping(entityManager.getEntityManagerFactory())
+                .scope(User.class)
+                .massIndexer()
+                .start();
     }
 
     @Override
@@ -79,7 +85,7 @@ public class UserServiceImpl implements UserService {
         return searchSession.search(User.class)
                 .where(f -> f.simpleQueryString()
                         .fields("firstName", "lastName", "ssn")
-                        .matching(query + "* OR" + query))
+                        .matching(query + "*"))
                 .fetchHits(20);
     }
 

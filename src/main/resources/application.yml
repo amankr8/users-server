@@ -9,12 +9,8 @@ spring:
     password:
 
   jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
 
   h2:
     console:
@@ -23,11 +19,11 @@ spring:
 hibernate:
   search:
     backend:
-      type: elasticsearch
-      hosts: http://localhost:9200
-      protocol: HTTP
-      log:
-        json_pretty_printing: true
+      type: lucene
+      directory:
+        type: local-heap
+    schema_management:
+      strategy: drop-and-create
 
 dummyApi:
   users:
