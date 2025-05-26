@@ -20,7 +20,6 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -78,7 +77,7 @@ public class UserServiceImpl implements UserService {
     public List<User> searchUsers(String query) {
         SearchSession searchSession = Search.session(entityManager);
         return searchSession.search(User.class)
-                .where(f -> f.match()
+                .where(f -> f.simpleQueryString()
                         .fields("firstName", "lastName", "ssn")
                         .matching(query))
                 .fetchHits(20);
