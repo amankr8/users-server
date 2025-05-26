@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
         return searchSession.search(User.class)
                 .where(f -> f.simpleQueryString()
                         .fields("firstName", "lastName", "ssn")
-                        .matching(query))
+                        .matching(query + "* OR" + query))
                 .fetchHits(20);
     }
 
