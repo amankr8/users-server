@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:h2:mem:demo-db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+
+  h2:
+    console:
+      enabled: true
+
+hibernate:
+  search:
+    backend:
+      type: elasticsearch
+      hosts: http://localhost:9200
+      protocol: HTTP
+      log:
+        json_pretty_printing: true
+
+dummyApi:
+  users:
+    url: https://dummyjson.com/users
