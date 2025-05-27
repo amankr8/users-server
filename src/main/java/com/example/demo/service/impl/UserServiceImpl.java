@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
         try {
             if (userRepository.count() == 0) {
                 loadUsers();
+                reindex();
             }
-            reindex();
         } catch (Exception e) {
             logger.warn("Failed to load users on startup", e);
         }
