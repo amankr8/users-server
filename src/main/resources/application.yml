@@ -19,11 +19,11 @@ spring:
 hibernate:
   search:
     backend:
-      type: lucene
-      directory:
-        type: local-heap
-    schema_management:
-      strategy: drop-and-create
+      type: elasticsearch
+      hosts: http://localhost:9200
+      protocol: HTTP
+      log:
+        json_pretty_printing: true
 
 dummyApi:
   users:
